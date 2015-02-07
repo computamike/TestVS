@@ -1,0 +1,34 @@
+﻿@model DateTime?
+DATE TIME TEMPLATE
+@{
+    // Create Variables for attributes
+    HelpText HelpText = null; // Retrieve Any Help Text
+    }
+
+@{
+    var CustomAttributes = (ViewData.ModelMetadata).ContainerType.GetProperty(ViewData.ModelMetadata.PropertyName).GetCustomAttributes(typeof(RazorPartialViews.HelpText), false);
+    if (CustomAttributes.Length > 0)
+    {
+        HelpText = CustomAttributes[0] as HelpText;
+    }
+}
+
+@if (HelpText != null)
+{
+    <p>Here is your Help : @(HelpText.PositionalString)  </p>
+}
+
+
+-- Simplified version:
+<br />
+@(HelpText != null ? HelpText.PositionalString : "-NO HELP DEFINED")
+<hr />
+
+
+
+@Html.TextBox("", (Model.HasValue ? Model.Value.ToShortDateString() :
+string.Empty), new
+{
+    @class = "datePicker",
+    @readonly = "readonly"
+})
